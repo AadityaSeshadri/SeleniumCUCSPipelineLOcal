@@ -150,8 +150,8 @@ public class Hooks{
              driver=new RemoteWebDriver(new URL("http://127.0.0.1:4444/wd/hub"), dr);
         }
 
-         Log.info("Driver Initialized");
-        Log.info("******Excecution  started for the scenario*****"+ scenario.getName());
+        // Log.info("Driver Initialized");
+        //Log.info("******Excecution  started for the scenario*****"+ scenario.getName());
        }
 
      
