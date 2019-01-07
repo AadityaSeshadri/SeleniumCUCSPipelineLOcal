@@ -44,6 +44,7 @@ public class StepDefinitions {
     public void user_Logins_Facebook_with_Username_and_Password(String uname, String pass) throws Throwable {
         System.out.println("Scenario name inside -------------------------" + scenario.getName());
         Reusable_Functions.AddStepLogToReport("Execution Started");
+
         driver.get("https://www.facebook.com");
         Reusable_Functions.AddStepLogToReport("Navigated to Facebook Website");
         LoginPage.Enter_Username(uname);
@@ -65,7 +66,7 @@ public class StepDefinitions {
     @Then("^User should be able to view Homepage$")
     public void user_should_be_able_to_view_Homepage() throws Throwable {
 
-        HomePage.check_HomePage();
+        HomePage.check_HomePage(driver);
         Log.info("Checked for Homepage");
 
     }
@@ -78,6 +79,7 @@ public class StepDefinitions {
         Reusable_Functions.AddStepLogToReport("User Navigated to Lazada");
         LoginPage.LoginLazada(driver,data.get(0).get("Username"),data.get(0).get("Password"));
         HomePage.ValidateLazadaHomePage(driver);
+        System.out.println("**************End of Given******************");
 
     }
 

@@ -29,6 +29,7 @@ import java.io.IOException;
 	{
 		driver.get("https://www.lazada.sg/");
 		Reusable_Functions.WaitforElementtoLoad(driver,"//div[@id='anonLogin']");
+		driver.manage().window().maximize();
 
 	}
 

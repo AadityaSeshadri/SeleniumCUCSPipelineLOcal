@@ -14,6 +14,7 @@ import com.github.mkolisnyk.cucumber.reporting.CucumberDetailedResults;
 import gherkin.formatter.model.Feature;
 import helpers.Log;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
+import io.github.bonigarcia.wdm.EdgeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import io.github.bonigarcia.wdm.InternetExplorerDriverManager;
 import org.apache.commons.io.FileUtils;
@@ -24,6 +25,7 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 /*import org.openqa.selenium.phantomjs.PhantomJSDriver;
@@ -120,6 +122,7 @@ public class Hooks{
         }
         else if (browser.equals("CHROME"))
         {
+
             ChromeDriverManager.getInstance().setup();
             driver = new ChromeDriver();
 
@@ -136,7 +139,20 @@ public class Hooks{
         else if(browser.equals("FIREFOX"))
         {
             FirefoxDriverManager.getInstance().setup();
+            //System.setProperty("webdriver.gecko.driver", "C:\\SeleniumCucumberCOde\\GithubCucsCode\\cucumber-jvm-template-master\\src\\test\\resources\\Drivers\\geckodriver.exe");
+            //WebDriver driver = new FirefoxDriver();
             driver = new FirefoxDriver();
+
+
+
+        }
+        else if(browser.equals("Edge"))
+        {
+            EdgeDriverManager.getInstance().setup();
+            //System.setProperty("webdriver.gecko.driver", "C:\\SeleniumCucumberCOde\\GithubCucsCode\\cucumber-jvm-template-master\\src\\test\\resources\\Drivers\\geckodriver.exe");
+            //WebDriver driver = new FirefoxDriver();
+            driver = new EdgeDriver();
+
 
         }
         else if(browser.equals("HUB"))
@@ -151,6 +167,7 @@ public class Hooks{
                 dr.setPlatform(Platform.LINUX);
              driver=new RemoteWebDriver(new URL("http://127.0.0.1:4444/wd/hub"), dr);
         }
+        driver.manage().deleteAllCookies();
         wait = new WebDriverWait(driver,20);
         // Log.info("Driver Initialized");
         //Log.info("******Excecution  started for the scenario*****"+ scenario.getName());

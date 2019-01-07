@@ -53,8 +53,10 @@ import java.util.logging.Logger;
 	//****************Place required to change when xpath or property changes
 
 
-	public static void check_HomePage()
+	public static void check_HomePage(WebDriver driver)
 	{
+
+		Reusable_Functions.WaitforElementtoLoad(driver,"//a[@class='_2s25']");
 		Assert.assertTrue(Lnk_Home.isDisplayed());
 		Reusable_Functions.AddStepLogToReport("Home Page Displayed");
 
@@ -81,11 +83,11 @@ import java.util.logging.Logger;
 		Reusable_Functions.CheckBoxClick(driver,ProductXpath);
 		Reusable_Functions.WaitforElementtoLoad(driver,"//span[contains(text(),'Filtered By')]//following-sibling::div/span[contains(text(),'Brand: ')]");
 		//Reusable_Functions.WaitforElementtoLoad(driver,"//div[@class='ant-tag']/span[contains(text(),'"+brand+"')]");
-		driver.navigate().refresh();
+		//driver.navigate().refresh();
 
 		Reusable_Functions.CheckBoxClick(driver,ServiceXpath);
 		Reusable_Functions.WaitforElementtoLoad(driver,"//div[@class='ant-tag']/span[contains(text(),'"+service+"')]");
-		driver.navigate().refresh();
+		//driver.navigate().refresh();
 
 		Reusable_Functions.CheckBoxClick(driver,ColorXpath);
 		Reusable_Functions.WaitforElementtoLoad(driver,"//div[@class='ant-tag']/span[contains(text(),'"+color+"')]");
