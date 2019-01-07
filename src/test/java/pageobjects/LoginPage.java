@@ -30,6 +30,23 @@ import java.io.IOException;
 	
 	@FindBy(how=How.XPATH, using="//input[@value='Log In']")
 	public static WebElement Btn_signin;
+
+    @FindBy(how=How.ID, using="anonLogin")
+    public static WebElement Lnk_LazadaLoginSignIn;
+
+    @FindBy(how=How.XPATH, using="//input[@placeholder='Please enter your Phone Number or Email']")
+    public static WebElement Txt_LoginName;
+
+    @FindBy(how=How.XPATH, using="//input[@placeholder='Please enter your password']")
+    public static WebElement Txt_LoginPwd;
+
+    @FindBy(how=How.XPATH, using=" //button[@class='mod-button mod-button mod-third-party-login-btn mod-third-party-login-fb']")
+    public static WebElement Btn_FBLogin;
+
+    @FindBy(how=How.XPATH, using="//button[@name='__CONFIRM__']")
+    public static WebElement Btn_ContinueasPerson;
+
+
 	//****************Place required to change when xpath or property changes
 
 
@@ -56,7 +73,29 @@ import java.io.IOException;
 		Reusable_Functions.ButtonClick(Btn_signin);
 		Reusable_Functions.AddStepLogToReport("Sign in Button Clicked");
 	}
-}
+
+		public static void LoginLazada(WebDriver driver,String Uname,String Pwd) throws InterruptedException {
+		    Reusable_Functions.LinkClick(driver,Lnk_LazadaLoginSignIn);
+            Reusable_Functions.AddStepLogToReport("Login Button Clicked");
+		    Reusable_Functions.ButtonClick(Btn_FBLogin);
+            Reusable_Functions.AddStepLogToReport("Login with Facebook Button Clicked");
+		    Reusable_Functions.switchToNewWindow(2);
+            Reusable_Functions.AddStepLogToReport("Switched to Child Window");
+            Reusable_Functions.WaitforElementtoLoad(driver,"//input[@id='email']");
+			Reusable_Functions.EnterTextBox(Txt_User_Name,Uname);
+            Reusable_Functions.AddStepLogToReport("User Name Entered:"  +Uname);
+            Reusable_Functions.EnterTextBox(Txt_password,Pwd);
+            Reusable_Functions.AddStepLogToReport("Password Entered:"   +"$$$$$$$$$$$$");
+            Reusable_Functions.ButtonClick(Btn_signin);
+            Reusable_Functions.AddStepLogToReport("Sign in Button Clicked");
+            Reusable_Functions.switchToNewWindow(1);
+            Reusable_Functions.AddStepLogToReport("Switched Back to Parent Window");
+
+
+
+
+		}
+	}
 		
 
 	

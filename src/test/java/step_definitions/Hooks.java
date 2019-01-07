@@ -33,6 +33,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
@@ -41,6 +42,7 @@ import javax.imageio.ImageIO;
 public class Hooks{
     public static  WebDriver driver;
     public static Scenario scenario;
+    public static WebDriverWait wait;
     public static String OS_Name;
 
     //@Before("@Login")
@@ -149,13 +151,13 @@ public class Hooks{
                 dr.setPlatform(Platform.LINUX);
              driver=new RemoteWebDriver(new URL("http://127.0.0.1:4444/wd/hub"), dr);
         }
-
+        wait = new WebDriverWait(driver,20);
         // Log.info("Driver Initialized");
         //Log.info("******Excecution  started for the scenario*****"+ scenario.getName());
        }
 
      
-    @After(order = 1)
+    @After
     public void embedScreenshot(Scenario scenario) {
 
         if (scenario.isFailed()) {

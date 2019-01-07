@@ -7,20 +7,24 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 public class Reusable_Functions {
 
     public static HashMap<String, String> hashMap = new HashMap<String, String>();
+
 
     public static void Set_PreRequisites(Scenario scenario) throws IOException {
         FileUtils.deleteDirectory(new File(System.getProperty("user.dir")+"//log"));
@@ -90,4 +94,48 @@ public class Reusable_Functions {
         scenario.embed(screenshot, "image/png");
     }
 
+    public static void WaitforElementtoLoad(WebDriver driver,String Xpath) {
+
+        WebDriverWait wait = new WebDriverWait(driver,25);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Xpath)));
+
+
+    }
+
+    public static void LinkClick(WebDriver driver,WebElement element) {
+
+        Actions ob = new Actions(driver);
+        ob.moveToElement(element);
+        ob.click(element);
+        Action action  = ob.build();
+        action.perform();
+
+
+    }
+
+    public static void switchToNewWindow(int windowNumber) {
+        int windowCount = 0;
+        WebDriver driver = Hooks.driver;
+        Set< String > s = driver.getWindowHandles();
+        Iterator< String > ite = s.iterator();
+        int i = 1;
+        while (ite.hasNext() && i < 10) {
+            String popupHandle = ite.next().toString();
+            driver.switchTo().window(popupHandle);
+            System.out.println("Window title is : "+driver.getTitle());
+            if (i == windowCount) break;
+            i++;
+        }
+    }
+
+    public static void CheckBoxClick(WebDriver driver,String Xpathofelement) {
+        /*Actions ob = new Actions(driver);
+        ob.moveToElement(.xpath(Xpathofelement));
+        ob.click( driver.findElement(By.xpath(Xpathofelement)));
+        Action action  = ob.build();
+        action.perform();*/
+        //driver.findElement(By.xpath(Xpathofelement)).click();
+        JavascriptExecutor executor = (JavascriptExecutor)driver;
+        executor.executeScript("arguments[0].click();", driver.findElement(By.xpath(Xpathofelement)));
+    }
 }

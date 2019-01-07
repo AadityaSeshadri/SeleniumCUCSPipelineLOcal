@@ -2,16 +2,25 @@ package step_definitions;
 
 import static org.testng.AssertJUnit.assertEquals;
 
+import cucumber.api.DataTable;
 import cucumber.api.Scenario;
+import cucumber.api.java.en.Given;
 import helpers.Log;
 import org.apache.log4j.PropertyConfigurator;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pageobjects.HomePage;
+import pageobjects.LazadaLandingPage;
 import pageobjects.LoginPage;
+
+import java.util.List;
+import java.util.Map;
 //import helpers.Log;
 
 
@@ -25,7 +34,7 @@ public class StepDefinitions {
     	 scenario = Hooks.scenario;
         PageFactory.initElements(driver, LoginPage.class);
         PageFactory.initElements(driver, HomePage.class);
-
+        PageFactory.initElements(driver, LazadaLandingPage.class);
 
 
     }
@@ -60,5 +69,47 @@ public class StepDefinitions {
 
     }
 
-    
+    @Given("^Login to Lazada with Facebook$")
+    public void User_Login_to_Lazada(DataTable usercredentials) throws Throwable {
+        List<Map<String,String>> data = usercredentials.asMaps(String.class,String.class);
+        System.out.println("*********************Given Background********************");
+        LazadaLandingPage.NavigateLazada(driver);
+        Reusable_Functions.AddStepLogToReport("User Navigated to Lazada");
+        LoginPage.LoginLazada(driver,data.get(0).get("Username"),data.get(0).get("Password"));
+        HomePage.ValidateLazadaHomePage(driver);
+
+    }
+
+
+
+
+    @When("^Search for Product with Below Specs$")
+    public void search_for_Product_with_Below_Specs(DataTable ProductList) throws Throwable {
+        List<Map<String,String>> data = ProductList.asMaps(String.class,String.class);
+        // Write code here that turns the phrase above into concrete actions
+       // throw new PendingException();
+        //System.out.println("$$$$$$$$$$$$$$$$$$$$$$Pased$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        HomePage.SelectProducts(driver,data.get(0).get("Product"),data.get(0).get("Brand"),data.get(0).get("Rating"),data.get(0).get("Color"),data.get(0).get("Service"));
+    }
+
+    @Then("^Add Products into Cart$")
+    public void add_Products_into_Cart() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        //throw new PendingException();
+    }
+
+    @When("^Clicked on Cart$")
+    public void clicked_on_Cart() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        //throw new PendingException();
+    }
+
+    @Then("^Validate added product existence into Cart$")
+    public void validate_added_product_existence_into_Cart() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        //throw new PendingException();
+    }
+
+
+
 }

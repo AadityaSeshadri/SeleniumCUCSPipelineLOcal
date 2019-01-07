@@ -1,8 +1,19 @@
 Feature: Login to Facebook and Check for Homepage
-@Login
-  Scenario Outline: Facebook Login
-    When User Logins Facebook with Username "<username>"  and Password "<password>"
-    Then User should be able to view Homepage
-    Examples:
-    |username                  |password    |
-    |aadityaapr5@gmail.com     |XXXXXXXXXXXX|
+
+  Background:
+    Given Login to Lazada with Facebook
+      | Username                  | Password    |
+      | aadityaapr5@gmail.com     | velayaparu |
+
+  @Login
+  Scenario: Lazada Add Products
+    When Search for Product with Below Specs
+      | Product                   | Brand    |Rating    | Color|    Service      |
+      | Wireless Mouse            | Logitech |  5       |Black |Free Shipping    |
+    Then Add Products into Cart
+
+
+
+
+
+
