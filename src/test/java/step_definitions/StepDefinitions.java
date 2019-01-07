@@ -4,6 +4,7 @@ import static org.testng.AssertJUnit.assertEquals;
 
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import helpers.Log;
 import org.apache.log4j.PropertyConfigurator;
@@ -86,30 +87,38 @@ public class StepDefinitions {
     @When("^Search for Product with Below Specs$")
     public void search_for_Product_with_Below_Specs(DataTable ProductList) throws Throwable {
         List<Map<String,String>> data = ProductList.asMaps(String.class,String.class);
-        // Write code here that turns the phrase above into concrete actions
-       // throw new PendingException();
-        //System.out.println("$$$$$$$$$$$$$$$$$$$$$$Pased$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         HomePage.SelectProducts(driver,data.get(0).get("Product"),data.get(0).get("Brand"),data.get(0).get("Rating"),data.get(0).get("Color"),data.get(0).get("Service"));
+    }
+
+    @When("^Validate Info of First Product in List$")
+    public void ValidateProductINfo(DataTable ProductINfo) throws Throwable {
+        List<Map<String,String>> data = ProductINfo.asMaps(String.class,String.class);
+        HomePage.ValidateProductInfo(driver,data.get(0).get("Name"),data.get(0).get("Price"));
     }
 
     @Then("^Add Products into Cart$")
     public void add_Products_into_Cart() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         //throw new PendingException();
+        HomePage.AddtoCart(driver);
     }
 
     @When("^Clicked on Cart$")
     public void clicked_on_Cart() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        //throw new PendingException();
+        HomePage.ClickCart(driver);
+
     }
 
-    @Then("^Validate added product existence into Cart$")
-    public void validate_added_product_existence_into_Cart() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        //throw new PendingException();
+    @Then("^Validate Products in cart$")
+    public void validate_added_product_existence_into_Cart(DataTable ProductINfo) throws Throwable {
+        List<Map<String,String>> data = ProductINfo.asMaps(String.class,String.class);
+        HomePage.ValidateCart(driver,data.get(0).get("Name"),data.get(0).get("Price"));
     }
 
+    @And("^Delete Product in Cart$")
+    public void DeleteCart() throws Throwable {
 
+        HomePage.DeleteCart(driver);
+    }
 
 }

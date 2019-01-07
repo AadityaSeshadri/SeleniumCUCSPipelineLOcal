@@ -40,6 +40,11 @@ import java.util.logging.Logger;
 	@FindBy(how=How.XPATH, using="//button[contains(text(),'SEARCH')]")
 	public static WebElement Btn_Search;
 
+	@FindBy(how=How.XPATH, using="//span[contains(text(),'Add to Cart')]")
+	public static WebElement Btn_AddToCart;
+
+	@FindBy(how=How.XPATH, using="//span[@class='cart-icon']")
+	public static WebElement Btn_HomepageCart;
 
 
 
@@ -76,12 +81,15 @@ import java.util.logging.Logger;
 		Reusable_Functions.CheckBoxClick(driver,ProductXpath);
 		Reusable_Functions.WaitforElementtoLoad(driver,"//span[contains(text(),'Filtered By')]//following-sibling::div/span[contains(text(),'Brand: ')]");
 		//Reusable_Functions.WaitforElementtoLoad(driver,"//div[@class='ant-tag']/span[contains(text(),'"+brand+"')]");
+		driver.navigate().refresh();
 
 		Reusable_Functions.CheckBoxClick(driver,ServiceXpath);
 		Reusable_Functions.WaitforElementtoLoad(driver,"//div[@class='ant-tag']/span[contains(text(),'"+service+"')]");
+		driver.navigate().refresh();
 
 		Reusable_Functions.CheckBoxClick(driver,ColorXpath);
 		Reusable_Functions.WaitforElementtoLoad(driver,"//div[@class='ant-tag']/span[contains(text(),'"+color+"')]");
+		driver.navigate().refresh();
 
 		if (rating.equals("5"))
 		{
@@ -103,18 +111,45 @@ import java.util.logging.Logger;
 		{
 			Reusable_Functions.LinkClick(driver,driver.findElements(By.xpath("//div[contains(text(),'Rating')]//following-sibling::div/div")).get(4));
 		}
+	}
+
+	public static void ValidateProductInfo(WebDriver driver, String Name, String Price)
+	{
+		Reusable_Functions.WaitforElementtoLoad(driver,"//div[@data-qa-locator='general-products']");
+		driver.navigate().refresh();
+		Reusable_Functions.LinkClick(driver,driver.findElement(By.xpath("//div[@data-qa-locator='general-products']/div[@data-item-id='272640233']//a[contains(text(),'Logitech G Pro HERO Wireless Mouse + Powerplay wireless charger')]")));
+		Reusable_Functions.WaitforElementtoLoad(driver,"//div[@id='module_product_title_1']");
+		String Act_Price = driver.findElement(By.xpath("//span[@class=' pdp-price pdp-price_type_normal pdp-price_color_orange pdp-price_size_xl']")).getText();
+		Assert.assertTrue(Act_Price.contains(Price));
 
 
-		Thread.sleep(3000000);
-
-		/*Reusable_Functions.CheckBoxClick(driver,ColorXpath);
-		Reusable_Functions.WaitforElementtoLoad(driver,"//div[@class='ant-tag']/span[contains(text(),'"+color+"')]");*/
 
 
-		//Reusable_Functions.CheckBoxClick(driver,ProductXpath);
-		//Thread.sleep(10000);
+	}
+
+	public static void AddtoCart(WebDriver driver) {
+		Reusable_Functions.ButtonClick(Btn_AddToCart);
+		Reusable_Functions.switchToNewWindow(2);
+		Reusable_Functions.WaitforElementtoLoad(driver,"//span[contains(text(),'1 new item(s) have been added to your cart')]");
+	}
+
+	public static void ClickCart(WebDriver driver) {
+		Reusable_Functions.LinkClick(driver,Btn_HomepageCart);
+		Reusable_Functions.WaitforElementtoLoad(driver,"//a[contains(text(),'Logitech G Pro HERO Wireless Mouse')]");
 
 
+	}
+
+	public static void ValidateCart(WebDriver driver, String name, String price) {
+		Assert.assertTrue(driver.findElement(By.xpath("//a[contains(text(),'Logitech G Pro HERO Wireless Mouse')]")).getText().contains(name));
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='current-price']")).getText().contains(price));
+	}
+
+	public static void DeleteCart(WebDriver driver) {
+		driver.findElement(By.xpath("//span[contains(text(),'Delete')]")).click();
+		Reusable_Functions.WaitforElementtoLoad(driver,"//div[contains(text(),'Are you sure you want to delete these item(s)')]");
+		driver.findElement(By.xpath("//button[contains(text(),'REMOVE')]")).click();
+		Reusable_Functions.WaitforElementtoLoad(driver,"//div[contains(text(),'Your cart is empty')]");
 	}
 }
 		
