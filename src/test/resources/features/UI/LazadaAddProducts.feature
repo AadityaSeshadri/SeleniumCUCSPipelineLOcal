@@ -1,4 +1,4 @@
-Feature: Login to Facebook and Check for Homepage
+Feature: Added Products is available in Cart
 
   Background:
     Given Login to Lazada with Facebook
