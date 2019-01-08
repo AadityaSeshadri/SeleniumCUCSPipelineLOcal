@@ -76,9 +76,11 @@ public class StepDefinitions {
         List<Map<String,String>> data = usercredentials.asMaps(String.class,String.class);
         System.out.println("*********************Given Background********************");
         LazadaLandingPage.NavigateLazada(driver);
+        Reusable_Functions.Take_Screenshot(driver,scenario);
         Reusable_Functions.AddStepLogToReport("User Navigated to Lazada");
         LoginPage.LoginLazada(driver,data.get(0).get("Username"),data.get(0).get("Password"));
         HomePage.ValidateLazadaHomePage(driver);
+        Reusable_Functions.Take_Screenshot(driver,scenario);
         System.out.println("**************End of Given******************");
 
     }
@@ -90,12 +92,14 @@ public class StepDefinitions {
     public void search_for_Product_with_Below_Specs(DataTable ProductList) throws Throwable {
         List<Map<String,String>> data = ProductList.asMaps(String.class,String.class);
         HomePage.SelectProducts(driver,data.get(0).get("Product"),data.get(0).get("Brand"),data.get(0).get("Rating"),data.get(0).get("Color"),data.get(0).get("Service"));
+        Reusable_Functions.Take_Screenshot(driver,scenario);
     }
 
     @When("^Validate Info of First Product in List$")
     public void ValidateProductINfo(DataTable ProductINfo) throws Throwable {
         List<Map<String,String>> data = ProductINfo.asMaps(String.class,String.class);
         HomePage.ValidateProductInfo(driver,data.get(0).get("Name"),data.get(0).get("Price"));
+        Reusable_Functions.Take_Screenshot(driver,scenario);
     }
 
     @Then("^Add Products into Cart$")
@@ -103,6 +107,7 @@ public class StepDefinitions {
         // Write code here that turns the phrase above into concrete actions
         //throw new PendingException();
         HomePage.AddtoCart(driver);
+        Reusable_Functions.Take_Screenshot(driver,scenario);
     }
 
     @When("^Clicked on Cart$")
@@ -115,12 +120,14 @@ public class StepDefinitions {
     public void validate_added_product_existence_into_Cart(DataTable ProductINfo) throws Throwable {
         List<Map<String,String>> data = ProductINfo.asMaps(String.class,String.class);
         HomePage.ValidateCart(driver,data.get(0).get("Name"),data.get(0).get("Price"));
+        Reusable_Functions.Take_Screenshot(driver,scenario);
     }
 
     @And("^Delete Product in Cart$")
     public void DeleteCart() throws Throwable {
 
         HomePage.DeleteCart(driver);
+        Reusable_Functions.Take_Screenshot(driver,scenario);
     }
 
 }

@@ -65,7 +65,7 @@ import java.util.logging.Logger;
 
 	public static void ValidateLazadaHomePage(WebDriver driver) throws InterruptedException {
 		Assert.assertTrue(Txt_SearchProduct.isDisplayed());
-		Thread.sleep(7000);
+		Thread.sleep(5000);
 		//Reusable_Functions.WaitforElementtoLoad(driver,"//h3[contains(text(),'Lazada Southeast Asia')]");
 		//Assert.assertTrue(driver.findElements(By.xpath("//span[contains(text(),'Black')]")).get(1).isDisplayed());
 
@@ -81,16 +81,20 @@ import java.util.logging.Logger;
 		Reusable_Functions.WaitforElementtoLoad(driver,ProductXpath);
 		//System.out.println("%%%%%%%%%%%%%%%%%%%%%ProductXpath"+ProductXpath+"%%%%%%%%%%%%%%%%%%%%");
 		Reusable_Functions.CheckBoxClick(driver,ProductXpath);
+		Reusable_Functions.AddStepLogToReport("Product Selected is " + product );
 		Reusable_Functions.WaitforElementtoLoad(driver,"//span[contains(text(),'Filtered By')]//following-sibling::div/span[contains(text(),'Brand: ')]");
 		//Reusable_Functions.WaitforElementtoLoad(driver,"//div[@class='ant-tag']/span[contains(text(),'"+brand+"')]");
 		//driver.navigate().refresh();
 
 		Reusable_Functions.CheckBoxClick(driver,ServiceXpath);
 		Reusable_Functions.WaitforElementtoLoad(driver,"//div[@class='ant-tag']/span[contains(text(),'"+service+"')]");
+		Reusable_Functions.AddStepLogToReport("Service Selected is " + service );
 		//driver.navigate().refresh();
 
 		Reusable_Functions.CheckBoxClick(driver,ColorXpath);
 		Reusable_Functions.WaitforElementtoLoad(driver,"//div[@class='ant-tag']/span[contains(text(),'"+color+"')]");
+		Reusable_Functions.AddStepLogToReport("color Selected is " + color );
+		Thread.sleep(3000);
 		driver.navigate().refresh();
 
 		if (rating.equals("5"))
@@ -113,6 +117,7 @@ import java.util.logging.Logger;
 		{
 			Reusable_Functions.LinkClick(driver,driver.findElements(By.xpath("//div[contains(text(),'Rating')]//following-sibling::div/div")).get(4));
 		}
+		Reusable_Functions.AddStepLogToReport("rating Selected is " + rating );
 	}
 
 	public static void ValidateProductInfo(WebDriver driver, String Name, String Price)
@@ -123,6 +128,7 @@ import java.util.logging.Logger;
 		Reusable_Functions.WaitforElementtoLoad(driver,"//div[@id='module_product_title_1']");
 		String Act_Price = driver.findElement(By.xpath("//span[@class=' pdp-price pdp-price_type_normal pdp-price_color_orange pdp-price_size_xl']")).getText();
 		Assert.assertTrue(Act_Price.contains(Price));
+		//Reusable_Functions.AddStepLogToReport("Expected Price is  " + Price + "Actual Price  is " + Act_Price );
 
 
 
@@ -138,6 +144,7 @@ import java.util.logging.Logger;
 	public static void ClickCart(WebDriver driver) {
 		Reusable_Functions.LinkClick(driver,Btn_HomepageCart);
 		Reusable_Functions.WaitforElementtoLoad(driver,"//a[contains(text(),'Logitech G Pro HERO Wireless Mouse')]");
+		Reusable_Functions.AddStepLogToReport("Clicked on Cart" );
 
 
 	}
@@ -145,6 +152,8 @@ import java.util.logging.Logger;
 	public static void ValidateCart(WebDriver driver, String name, String price) {
 		Assert.assertTrue(driver.findElement(By.xpath("//a[contains(text(),'Logitech G Pro HERO Wireless Mouse')]")).getText().contains(name));
 		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='current-price']")).getText().contains(price));
+		Reusable_Functions.AddStepLogToReport(" Actual Product Name " +  driver.findElement(By.xpath("//a[contains(text(),'Logitech G Pro HERO Wireless Mouse')]")).getText());
+		Reusable_Functions.AddStepLogToReport(" Actual Product Price " +  driver.findElement(By.xpath("//p[@class='current-price']")).getText());
 	}
 
 	public static void DeleteCart(WebDriver driver) {
