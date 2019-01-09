@@ -51,7 +51,7 @@ public class StepDefinitions {
         Reusable_Functions.Take_Screenshot(driver,scenario);
         if(pass.equals("XXXXXXXXXXXX"))
         {
-            pass = "velayaparu";
+            pass = "VelayaParu@541990";
         }
         LoginPage.Enter_Password(pass);
         Reusable_Functions.Take_Screenshot(driver,scenario);
@@ -73,12 +73,18 @@ public class StepDefinitions {
 
     @Given("^Login to Lazada with Facebook$")
     public void User_Login_to_Lazada(DataTable usercredentials) throws Throwable {
+
         List<Map<String,String>> data = usercredentials.asMaps(String.class,String.class);
+        String Password = data.get(0).get("Password");
+        if (Password.equals("XXXXXXXX"))
+        {
+            Password = "VelayaParu@541990";
+        }
         System.out.println("*********************Given Background********************");
         LazadaLandingPage.NavigateLazada(driver);
         Reusable_Functions.Take_Screenshot(driver,scenario);
         Reusable_Functions.AddStepLogToReport("User Navigated to Lazada");
-        LoginPage.LoginLazada(driver,data.get(0).get("Username"),data.get(0).get("Password"));
+        LoginPage.LoginLazada(driver,data.get(0).get("Username"),Password);
         HomePage.ValidateLazadaHomePage(driver);
         Reusable_Functions.Take_Screenshot(driver,scenario);
         System.out.println("**************End of Given******************");

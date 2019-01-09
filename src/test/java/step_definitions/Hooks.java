@@ -47,6 +47,9 @@ public class Hooks{
     public static WebDriverWait wait;
     public static String OS_Name;
 
+    public static String BrowserStackUsername = "shaikmehrajpasha1";
+    public static String BrowserStackKey = "Jp7ZqAhMzUCdzrTgYyqq";
+
     //@Before("@Login")
     public void first (Scenario scenario)
     {
@@ -166,6 +169,19 @@ public class Hooks{
                 dr.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
                 dr.setPlatform(Platform.LINUX);
              driver=new RemoteWebDriver(new URL("http://127.0.0.1:4444/wd/hub"), dr);
+        }
+        else if(browser.equals("BROWSERSTACK"))
+        {
+            String URL = "https://" + BrowserStackUsername + ":" + BrowserStackKey + "@hub-cloud.browserstack.com/wd/hub";
+            DesiredCapabilities dr=null;
+
+            dr=DesiredCapabilities.chrome();
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments("--headless");
+            dr.setBrowserName("chrome");
+            dr.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+            dr.setPlatform(Platform.ANY);
+            driver=new RemoteWebDriver(new URL(URL), dr);
         }
         driver.manage().deleteAllCookies();
         wait = new WebDriverWait(driver,20);

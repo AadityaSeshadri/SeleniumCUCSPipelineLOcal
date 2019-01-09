@@ -2,8 +2,8 @@ Feature: Added Products is available in Cart
 
   Background:
     Given Login to Lazada with Facebook
-      | Username                  | Password    |
-      | aadityaapr5@gmail.com     | velayaparu |
+      | Username                  | Password          |
+      | aadityaapr5@gmail.com     | XXXXXXXX          |
 
   @Lazada
   Scenario: Lazada Add Products
